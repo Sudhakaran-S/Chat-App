@@ -19,7 +19,7 @@ const AuthStackNavigator = createStackNavigator({
 
 const SwitchNavigator = createSwitchNavigator(
 {
-    AuthLoading: Register
+    AuthLoading: AuthStackNavigator
 },
 {
     initialRouteName: 'AuthLoading',

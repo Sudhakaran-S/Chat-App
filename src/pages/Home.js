@@ -1,16 +1,20 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
-const HelloWorldApp = () => {
-  return (
-    <View style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}>
-      <Text>Hello, world!</Text>
-    </View>
-  );
-}
+class Home extends Component{
+	render(){
+		return (
+			<View style={styles.mycontainer}>
+			    <Text>This is the Home Page</Text>
+			</View>
+		)
 
-export default HelloWorldApp;
+	}
+}
+export default Home;
+const styles=StyleSheet.create({
+	mycontainer: {
+		fontSize: 90,
+		color: '#ffffff'
+	}
+});

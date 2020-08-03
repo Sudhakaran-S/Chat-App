@@ -14,6 +14,7 @@ import {
 
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import axios from 'axios'; 
 
 
 class Login extends Component {
@@ -24,7 +25,7 @@ class Login extends Component {
             password: '',
             errors: {},
         };
-        this.validateFrom = this.validateFrom.bind(this);
+        this.validateForm = this.validateForm.bind(this);
     }
     handleEmail = (text) => {
         this.setState({ email: text })
@@ -36,19 +37,19 @@ class Login extends Component {
     login = (email, pass) => {
         alert('email: ' + email + 'password: ' + pass)
     }*/
-    validateFrom = () => {
+    validateForm = () => {
         const { errors } = this.state;
         const emailaddr = this.state.email;
         const pass = this.state.password;
         const reg = /^(?:\d{10}|\w+([\.-]?\w+)*@\w([\.-]?\w+)*(\.\w{2,3})+$)$/;
         if (emailaddr === '') {
-            errors.email = "Email address cannot be empty.";
+            errors.emailaddr = "Email address cannot be empty.";
         }
         else if (emailaddr.length > 0 && !reg.test(emailaddr)) {
-            errors.email = "Please provide correct email address";
+            errors.emailaddr = "Please provide correct email address";
         }
         else {
-            errors.email = '';
+            errors.emailaddr = '';
         }
 
         if (pass === '') {
@@ -61,23 +62,26 @@ class Login extends Component {
             errors.pass = '';
         }
         this.setState({ errors })
-        if(errors.email==='' && errors.pass==='') {
-            submitFrom();
+        if(errors.emailaddr==='' && errors.pass==='') {
+            this.submitForm();
         }
     }
-    submitFrom = async () => {
-        fetch('http://localhost:3000/loginuser', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({"email": this.state.email, "password": this.state.password })
-        }).then((Response) => {
-               Response.json()
-            this.props.navigation.navigate('Home');
-            })
-            .catch((error) => {
-                console.error(error);
+    submitForm = async () => {
+        let that=this;
+        axios.post('http://192.168.43.73:8082/loginuser', {  
+                   email: this.state.email,
+                   password:this.state.password
+        }).then(function(response) {
+            if(response && response.data) {
+              that.props.navigation.navigate('Home');
+            }
+                 else{
+             console.log(response.response.data);
+           }
+        })
+            .catch(function (error) {
+                console.log("Errors",error);
+                console.log(error.response);
             });
     }
     render() {
@@ -90,21 +94,19 @@ class Login extends Component {
                     placeholder = "Email"
                     placeholderTextColor = "#000"
                     autoCapitalize = "none"
-                    onchangeText = {this.handleEmail} />
-                <Text>{this.state.errors.email}</Text>
+                    onChangeText = {this.handleEmail} />
+                <Text style={styles.errorstyle}>{errors.emailaddr}</Text>
                 <TextInput style = {styles.input}
                     underlineColorAndroid = "transparent"
                     placeholder = "Password"
                     placeholderTextColor = "#000"
                     autoCapitalize = "none"
-                    onchangeText = {this.handlePassword} />
-                <Text>{this.state.errors.pass}</Text>
+                    onChangeText = {this.handlePassword} />
+                <Text style={styles.errorstyle}>{errors.pass}</Text>
             
                 <TouchableOpacity 
                     style = {styles.submitButton}
-                    onPress = {
-                    () => this.validateFrom()
-                    }>
+                    onPress = {this.validateFrom}>
                     <Text style = {styles.submitButtonText}> Login </Text>
                 </TouchableOpacity>
                 <Text style = {styles.registerButton}> Register </Text>
@@ -171,5 +173,11 @@ const styles = StyleSheet.create({
         marginTop: 25,
         fontFamily: 'sans-serif-light',
         fontWeight: 'normal'
+    },
+    errorstyle: {
+        color: '#ff0000',
+        fontSize: 14,
+        fontWeight: 'bold'
     }
+
 })
