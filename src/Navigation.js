@@ -9,11 +9,11 @@ const AuthStackNavigator = createStackNavigator({
     Login: {
         screen: Login,
     },
-    Home: {
-        screen: Home,
-    },
-    Register: {
+     Register: {
         screen: Register,
+    },
+    Home: {
+        screen: Home
     }
 }, { headerMode: 'none'});
 

@@ -18,14 +18,15 @@ import axios from 'axios';
 
 
 class Login extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             email: '',
             password: '',
             errors: {},
         };
         this.validateForm = this.validateForm.bind(this);
+        this.goToRegister= this.goToRegister.bind(this);
     }
     handleEmail = (text) => {
         this.setState({ email: text })
@@ -33,10 +34,6 @@ class Login extends Component {
     handlePassword = (text) => {
         this.setState({ password: text })
     }
-    /*
-    login = (email, pass) => {
-        alert('email: ' + email + 'password: ' + pass)
-    }*/
     validateForm = () => {
         const { errors } = this.state;
         const emailaddr = this.state.email;
@@ -84,6 +81,9 @@ class Login extends Component {
                 console.log(error.response);
             });
     }
+goToRegister(){
+    	this.props.navigation.navigate('Register');
+    }
     render() {
         const { errors } = this.state;
         return (
@@ -104,13 +104,17 @@ class Login extends Component {
                     onChangeText = {this.handlePassword} />
                 <Text style={styles.errorstyle}>{errors.pass}</Text>
             
-                <TouchableOpacity 
-                    style = {styles.submitButton}
-                    onPress = {this.validateFrom}>
-                    <Text style = {styles.submitButtonText}> Login </Text>
+               <TouchableOpacity
+                        style = {styles.submitButton}
+                        onPress = {this.validateForm}>
+                        <Text style = {styles.submitButtonText}> Login </Text>
                 </TouchableOpacity>
-                <Text style = {styles.registerButton}> Register </Text>
-                <Text style = {styles.registerinfo}>For new user's click-Register</Text>
+
+                <TouchableOpacity
+                        style = {styles.registerButton}
+                        onPress = {this.goToRegister}>
+                        <Text style = {styles.submitButtonText}> Register </Text>
+                </TouchableOpacity>
             </View>
         );
     }
