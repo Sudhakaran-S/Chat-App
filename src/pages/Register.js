@@ -1,202 +1,216 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
-//import { userRegister } from './actions/userAction';
-//import { connect } from 'react-redux';
+import Toast from 'react-native-simple-toast';
+import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native'; 
 
 class Register extends Component {
-        constructor(props) {
-            super(props);
-            this.state = {
-                name: '',
-                displayname:'',
-                email:'',
-                password: '',
-                errors: {},
-            };
-            this.validateForm = this.validateForm.bind(this);
-            this.goToLogin=this.validateForm.bind(this);
-        }
-        handleName = (text) => {
-        this.setState({ name: text })
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: '',
+            displayname: '',
+            email: '',
+            password: '',
+            errors: {}
+        };
+        this.validateForm = this.validateForm.bind(this);
     }
-    handleDisplayName = (text) => {
-        this.setState({ displayname: text })
-    }
+     
+
+    handleName = (text) => {
+        this.setState({ name: text})
+      }
+
+      handleDisplayName = (text) => {
+        this.setState({ displayname: text})
+      }
+
     handleEmail = (text) => {
-        this.setState({ email: text })
-    }
-    handlePassword = (text) => {
-        this.setState({ password: text })
-    }
-    validateForm = () => {
+        this.setState({ email: text})
+      }
+      handlePassword = (text) => {
+        this.setState({ password: text})
+      }
+
+
+      validateForm () {
         const { errors } = this.state;
         const name = this.state.name;
-        const dname = this.state.displayname;
+        const displayname = this.state.displayname;
         const emailaddr = this.state.email;
         const pass = this.state.password;
-        const reg = /^(?:\d{10}|\w+([\.-]?\w+)*@\w([\.-]?\w+)*(\.\w{2,3})+$)$/;
-        if (name === '') {
-            errors.name = "name cannot be empty.";
-        }
-        else {
+        const reg = /^(?:\d{10}|\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$)$/;
+        
+        if (name === ''){
+            errors.name = "Name cannot be empty.";
+        } else {
             errors.name = '';
         }
 
-        if (dname === '') {
-            errors.dname = "display name cannot be empty.";
-        }
-        else {
-            errors.dname = '';
-        }
-        if (emailaddr === '') {
-            errors.emailaddr = "Email address cannot be empty.";
-        }
-        else if (emailaddr.length > 0 && !reg.test(emailaddr)) {
-            errors.emailaddr = "Please provide correct email address";
-        }
-        else {
-            errors.emailaddr = '';
+        if (displayname === ''){
+            errors.displayname = " Display name cannot be empty.";
+        } else {
+            errors.displayname = '';
         }
 
-        if (pass === '') {
-            errors.pass = "Password cannot be empty.";
+        if (emailaddr === ''){
+          errors.email = "Email address cannot be empty.";
+        } else if (emailaddr.length > 0 && !reg.test(emailaddr)){
+          errors.email = "Please provide correct email address";
+        } else {
+          errors.email = '';
         }
-        else if (pass && pass.length < 5) {
-            errors.pass = "Password should be more than 5 charactres.";
-        }
-        else {
-            errors.pass = '';
-        }
-        this.setState({ errors })
-        if(errors.name==='' && errors.displayname==='' && errors.emailaddr==='' && errors.pass==='') {
-            this.submitForm();
-        }
-    }
-    submitForm = async () => {
-        let that=this;
-        axios.post('http://192.168.43.73:8082/registeruser', {  
-                   name: this.state.name,
-                   displayname:this.state.displayname,
-                   email: this.state.email,
-                   password:this.state.password
-        }).then(function(response) {
-            if(response && response.data) {
-              that.props.navigation.navigate('Home');
-            }
-                 else{
-             console.log(response.response.data);
-           }
-        })
-            .catch(function (error) {
-                console.log("Errors",error);
-                console.log(error.response);
-            });
-    }
-goToLogin(){
-        this.props.navigation.navigate('Login');
-    }
     
-    render() {
-        const { errors } = this.state;
-        return (
-            <View style = {styles.container}>
-                <Text style = {styles.register}>REGISTRATION</Text>
-                <TextInput style = {styles.input}
-                    underlineColorAndroid = "transparent"
-                    placeholder = "name"
-                    placeholderTextColor = "#000"
-                    autoCapitalize = "none"
-                    onChangeText = {this.handleName} />
-                <Text style={styles.errorstyle}>{errors.name}</Text>
-                <TextInput style = {styles.input}
-                    underlineColorAndroid = "transparent"
-                    placeholder = "display name"
-                    placeholderTextColor = "#000"
-                    autoCapitalize = "none"
-                    onChangeText = {this.handleDisplayName} />
-                <Text style={styles.errorstyle}>{errors.dname}</Text>
-                <TextInput style = {styles.input}
-                    underlineColorAndroid = "transparent"
-                    placeholder = "Email"
-                    placeholderTextColor = "#000"
-                    autoCapitalize = "none"
-                    onChangeText = {this.handleEmail} />
-                <Text style={styles.errorstyle}>{errors.emailaddr}</Text>
-                <TextInput style = {styles.input}
-                    underlineColorAndroid = "transparent"
-                    placeholder = "Password"
-                    placeholderTextColor = "#000"
-                    autoCapitalize = "none"
-                    onChangeText = {this.handlePassword} />
-                <Text style={styles.errorstyle}>{errors.pass}</Text>
-                 <TouchableOpacity
-                        style = {styles.submitButton}
-                        onPress = {this.validateForm}>
-                        <Text style = {styles.submitButtonText}> Register </Text>
-                    </TouchableOpacity>
+        if (pass === ''){
+          errors.pass = "Password cannot be empty.";
+        } else if (pass && pass.length < 5) {
+          errors.pass = "Password should be more than 5 characters.";
+    
+        } else {
+          errors.pass = '';
+    
+        } 
+        this.setState({ errors})
+        if (errors.name==='' && errors.displayname==='' && errors.email=== '' && errors.pass === ''){
+          this.submitForm();
+        }
+      }
 
-                    <TouchableOpacity
-                        style = {styles.loginButton}
-                        onPress = {this.goToLogin}>
-                        <Text style = {styles.submitButtonText}> Login </Text>
-                    </TouchableOpacity>
-                    
-                
-            </View>
-        );
-    }
+submitForm = async () => {
+    let that = this;
+    axios.post('http://192.168.43.73:8082/registeruser',{
+        name: this.state.name,
+        displayname: this.state.displayname,
+        email: this.state.email,
+        password: this.state.password
+    })
+    .then(function (response) {
+        if(response && response.data && response.data._id) {
+            that.props.navigation.navigate('Home');
+        } else {
+            Toast.show(respone.data.message, 1000); 
+        }
+    })
+    .catch(function (error){
+        console.log(error);
+    });
+
+}
+
+goToLogin = () => {
+    this.props.navigation.navigate('Login');
+}
+
+render() {
+    const { errors } = this.state;
+    return (
+
+        <View style={styles.container}>
+
+        <View style={styles.inputView} >
+            <TextInput  
+              style={styles.inputText}
+              placeholder="Name..." 
+              placeholderTextColor="#003f5c"
+              autoCapitalize="none"
+              onChangeText={this.handleName}/>
+           <Text style={[styles.errorstyle]}>{errors.name}</Text>      
+          </View>
+
+          <View style={styles.inputView} >
+            <TextInput  
+              style={styles.inputText}
+              placeholder="Display Name..." 
+              placeholderTextColor="#003f5c"
+              autoCapitalize="none"
+              onChangeText={this.handleDisplayName}/>
+           <Text style={[styles.errorstyle]}>{errors.displayname}</Text>      
+          </View>
+         
+          <View style={styles.inputView} >
+            <TextInput  
+              style={styles.inputText}
+              placeholder="Email..." 
+              placeholderTextColor="#003f5c"
+              autoCapitalize="none"
+              onChangeText={this.handleEmail}/>
+           <Text style={[styles.errorstyle]}>{errors.email}</Text>      
+          </View>
+  
+  
+          <View style={styles.inputView} >
+            <TextInput  
+              secureTextEntry
+              style={styles.inputText}
+              placeholder="Password..." 
+              placeholderTextColor="#003f5c"
+              autoCapitalize="none"
+              onChangeText={this.handlePassword}/>
+            <Text style={[styles.errorstyle]}>{errors.pass}</Text>  
+          </View>
+  
+  
+        
+          <TouchableOpacity style={styles.loginBtn}
+          onPress={this.validateForm}>
+            <Text style={styles.loginText}>SUBMIT</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.loginBtn}
+          onPress = {this.goToLogin}>
+            <Text style={styles.loginText}>LOGIN</Text>
+          </TouchableOpacity>
+          </View>
+    );
+  }
 }
 
 
 export default Register;
 
 const styles = StyleSheet.create({
+
     container: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#e6ffff',
-        flex: 2,
-        
+      flex: 1,
+      backgroundColor: '#003f5c',
+      alignItems: 'center',
+      justifyContent: 'center'
     },
-    input: {
-        margin: 15,
-        height: 40,
-        borderColor: '#000',
-        borderWidth: 1,
-        width: '70%',
-        padding: 10,
-        fontSize: 16,
-        lineHeight: 20,
-        color: '#000',
-        borderRadius: 7,
+
+    inputView:{
+      width:"80%",
+      backgroundColor:"#465881",
+      borderRadius:25,
+      height:50,
+      marginBottom:20,
+      justifyContent:"center",
+      padding:20
     },
-    submitButton: {
-        backgroundColor: '#00cccc',
-        padding: 10,
-        margin: 15,
-        height: 40,
-        borderRadius: 7,
-        marginTop: 20,
-        marginLeft: -120
+    inputText:{
+      height:50,
+      color:"white"
     },
-    submitButtonText: {
-        color: 'white',
-        fontSize: 18,
-        fontWeight: 'bold'
+    
+    loginBtn:{
+      width:"80%",
+      backgroundColor:"#fb5b5a",
+      borderRadius:25,
+      height:50,
+      alignItems:"center",
+      justifyContent:"center",
+      marginTop:40,
+      marginBottom:10
     },
-    loginButton: {
-        backgroundColor: '#00cccc',
-        padding: 10,
-        margin: 15,
-        height: 40,
-        borderRadius: 7,
-        marginTop: -55,
-        marginLeft: 90
-    },
-    loginButtonText: {
-        color: 'white',
-        fontSize: 18,
-        fontWeight: 'bold'
-    },
-})
+    errorstyle:{                          
+      fontSize: 10,
+     alignSelf: 'center',
+     color: 'red'
+   },
+  
+    loginText:{
+      color:"white"
+    }
+   
+
+  
+  });

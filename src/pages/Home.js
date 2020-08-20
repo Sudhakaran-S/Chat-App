@@ -1,20 +1,81 @@
-import React, { Component } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import React, {Component} from 'react';
+import { View, Text, StyleSheet,TouchableOpacity } from 'react-native';
+import { userList } from '../actions/userAction';
+import { connect } from 'react-redux';
 
-class Home extends Component{
-	render(){
-		return (
-			<View style={styles.mycontainer}>
-			    <Text>This is the Home Page</Text>
-			</View>
-		)
+class Home extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            users: []
+        };
+    }
 
-	}
+    componentDidMount(){
+        this.props.onUserList();
+    }
+
+    goChat = (userid) => {
+        this.props.navigation.navigate('Chat', {userid: userid});
+    }
+
+    componentDidUpdate(nextProps) {
+        if(this.props.userReducer && this.props.userReducer.userList && this.props.userReducer.userList!==nextProps.userReducer.userList && this.props.userReducer.userListSuccess===true) {
+            this.setState({users: this.props.userReducer.userList});
+            
+        }
+    }
+
+    render(){
+        const { users } = this.state;
+        return (
+              <View style={styles.container}>
+                {users && users.length>0 ?
+                <View>
+                {users.map((item,index) => {
+                    return(
+                        <TouchableOpacity onPress={()=>this.goChat(item._id)}   key={index}>
+                        <Text style ={styles.item}>
+                            {item.name}
+                        </Text>
+                        </TouchableOpacity>
+                   )})}
+                </View>:null}
+                </View>
+             )
+    }
 }
-export default Home;
-const styles=StyleSheet.create({
-	mycontainer: {
-		fontSize: 90,
-		color: '#ffffff'
-	}
+
+function mapStateToProps(state) {
+    return{
+        userReducer: state.userReducer
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return{
+        onUserList:() => dispatch(userList())
+    };
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Home);
+
+
+const styles = StyleSheet.create({
+
+    container: {
+        flex: 1,
+        paddingTop: 10
+    },
+    item: {
+        padding: 10,
+        fontSize: 20,
+        height: 50,
+        color: '#ffffff',
+        backgroundColor: '#000000'
+    },
 });
+
