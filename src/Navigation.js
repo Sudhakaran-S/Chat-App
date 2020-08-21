@@ -24,9 +24,9 @@ const AppStackNavigator= createStackNavigator({
     },
     Chat :{
       screen: Chat,
-      navigationOptions:{
-        title: 'Chat Room',
-      }
+      // navigationOptions:{
+      //   title: 'Chat Room',
+      // }
     },
 });
 

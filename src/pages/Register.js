@@ -151,12 +151,12 @@ render() {
   
   
         
-          <TouchableOpacity style={styles.loginBtn}
+          <TouchableOpacity style={styles.register}
           onPress={this.validateForm}>
-            <Text style={styles.loginText}>SUBMIT</Text>
+            <Text style={styles.registerText}>Register</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.loginBtn}
+          <TouchableOpacity style={styles.login}
           onPress = {this.goToLogin}>
             <Text style={styles.loginText}>LOGIN</Text>
           </TouchableOpacity>
@@ -172,34 +172,45 @@ const styles = StyleSheet.create({
 
     container: {
       flex: 1,
-      backgroundColor: '#003f5c',
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      backgroundColor: '#00acee'
     },
 
     inputView:{
       width:"80%",
-      backgroundColor:"#465881",
-      borderRadius:25,
+      backgroundColor:"#00acee",
+      borderColor: "#000000",
+      borderWidth: 1.5,
       height:50,
       marginBottom:20,
       justifyContent:"center",
-      padding:20
+      padding:10,
+      paddingTop: 25,
     },
     inputText:{
       height:50,
       color:"white"
     },
     
-    loginBtn:{
-      width:"80%",
-      backgroundColor:"#fb5b5a",
-      borderRadius:25,
-      height:50,
-      alignItems:"center",
-      justifyContent:"center",
-      marginTop:40,
-      marginBottom:10
+    register:{
+      backgroundColor: '#ffffff',
+        padding: 13,
+        margin: 10,
+        height: 40,
+        borderRadius: 5,
+        width: 100,
+        left: -80,
+    },
+    login:{
+      backgroundColor: '#ffffff',
+        padding: 13,
+        margin: 10,
+        height: 40,
+        borderRadius: 5,
+        width: 80,
+        left: 50,
+        marginTop: -47,
     },
     errorstyle:{                          
       fontSize: 10,
@@ -208,7 +219,18 @@ const styles = StyleSheet.create({
    },
   
     loginText:{
-      color:"white"
+      color: '#000000',
+      fontSize: 20,
+      fontWeight: 'bold',
+      textAlign: 'center',
+      bottom: 6,
+    },
+    registerText: {
+      color: '#000000',
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        bottom: 6,
     }
    
 

@@ -15,8 +15,8 @@ class Home extends Component {
         this.props.onUserList();
     }
 
-    goChat = (userid) => {
-        this.props.navigation.navigate('Chat', {userid: userid});
+    goChat = (userid, name) => {
+        this.props.navigation.navigate('Chat', {userid: userid, name: name});
     }
 
     componentDidUpdate(nextProps) {
@@ -26,23 +26,41 @@ class Home extends Component {
         }
     }
 
-    render(){
-        const { users } = this.state;
-        return (
-              <View style={styles.container}>
-                {users && users.length>0 ?
-                <View>
-                {users.map((item,index) => {
-                    return(
-                        <TouchableOpacity onPress={()=>this.goChat(item._id)}   key={index}>
-                        <Text style ={styles.item}>
+//     render(){
+//         const { users } = this.state;
+//         return (
+//               <View style={styles.container}>
+//                 {users && users.length>0 ?
+//                 <View>
+//                 {users.map((item,index) => {
+//                     return(
+//                         <TouchableOpacity onPress={()=>this.goChat(item._id, item.name)}   key={index}>
+//                         <Text style ={styles.item}>
+//                             {item.name}
+//                         </Text>
+//                         </TouchableOpacity>
+//                    })}
+//                 </View>:null}
+//                 </View>
+//              )
+//     }
+// }
+render() {
+    const { users } = this.state;
+    return (
+        <View style = {styles.container}>
+            {users && users.length>0?
+            <View>
+                {users.map((item,index) =>
+                {
+                    return(<TouchableOpacity onPress={()=>this.goChat(item._id,item.name)} key={index}>
+                        <Text style={styles.item}>
                             {item.name}
-                        </Text>
-                        </TouchableOpacity>
-                   )})}
-                </View>:null}
-                </View>
-             )
+                        </Text></TouchableOpacity>
+                    )})}
+            </View>:null}
+            </View>
+        );
     }
 }
 
