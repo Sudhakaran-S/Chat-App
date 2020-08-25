@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import { userLogin } from '../actions/userAction';
 import { connect } from 'react-redux';
+
 
 class Login extends Component {
     constructor(props) {
@@ -66,13 +67,15 @@ componentDidUpdate(nextProps){
         const { errors} = this.state;
         return ( 
                <View style ={styles.container}>
+                <Image source = {require('../images/chatlogo5.gif')} style = {styles.logo} />
+                <Text style = {styles.text}>LOGIN</Text>
                 <TextInput style = {styles.input}
                     underlineColorAndroid = "transparent"
                     placeholder = "Email"
                     placeholderTextColor = "#ffffff"
                     autoCapitalize = "none"
                     onChangeText = {this.handleEmail} /> 
-                <Text style={[styles.errorstyle]}> {errors.email}</Text>
+                <Text style={styles.errorstyle}> {errors.email}</Text>
 
                 <TextInput style = {styles.input}
                     underlineColorAndroid = "transparent"
@@ -80,7 +83,7 @@ componentDidUpdate(nextProps){
                     placeholderTextColor = "#ffffff"
                     autoCapitalize = "none"
                     onChangeText = {this.handlePassword} />
-                <Text style={[styles.errorstyle]}>{errors.pass}</Text>
+                <Text style={styles.errorstyle}>{errors.pass}</Text>
 
 
                 <TouchableOpacity 
@@ -118,20 +121,40 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flex: 1,
-        backgroundColor: '#00acee'
+        backgroundColor: '#33ccff'
     },
-   
+    logo: {
+        borderRadius: 50,
+        width:70, 
+        height: 70, 
+        
+    },
+    text: {
+        color: '#ffffff',
+        marginBottom: 20,
+        fontSize: 50,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        textShadowOffset: {
+            height: 5,
+            width: 5
+        },
+        textShadowRadius: 5,
+        textShadowColor: '#1a0000'
+
+    },
     input: {
         margin: 10,
         height: 40,
         borderColor: '#000000',
         borderWidth: 1.5,
-        width: '70%',
+        borderRadius: 8,
+        width: '80%',
         padding: 10,
         fontSize: 13,
         lineHeight: 20,
         color: '#ffffff',
-        right: 20
+        right: -0
     },
     submitButton: {
         backgroundColor: '#ffffff',

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Toast from 'react-native-simple-toast';
-import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native'; 
+import { View, Text, TouchableOpacity, Image, TextInput, StyleSheet } from 'react-native'; 
 
 class Register extends Component {
     constructor(props) {
@@ -104,14 +104,14 @@ goToLogin = () => {
 render() {
     const { errors } = this.state;
     return (
-
         <View style={styles.container}>
-
+        <Image source = {require('../images/chatlogo5.gif')} style = {styles.logo} />
+        <Text style = {styles.text}>REGISTER</Text>
         <View style={styles.inputView} >
             <TextInput  
               style={styles.inputText}
-              placeholder="Name..." 
-              placeholderTextColor="#003f5c"
+              placeholder="Name" 
+              placeholderTextColor="#ffffff"
               autoCapitalize="none"
               onChangeText={this.handleName}/>
            <Text style={[styles.errorstyle]}>{errors.name}</Text>      
@@ -120,8 +120,8 @@ render() {
           <View style={styles.inputView} >
             <TextInput  
               style={styles.inputText}
-              placeholder="Display Name..." 
-              placeholderTextColor="#003f5c"
+              placeholder="Display Name" 
+              placeholderTextColor="#ffffff"
               autoCapitalize="none"
               onChangeText={this.handleDisplayName}/>
            <Text style={[styles.errorstyle]}>{errors.displayname}</Text>      
@@ -130,27 +130,23 @@ render() {
           <View style={styles.inputView} >
             <TextInput  
               style={styles.inputText}
-              placeholder="Email..." 
-              placeholderTextColor="#003f5c"
+              placeholder="Email" 
+              placeholderTextColor="#ffffff"
               autoCapitalize="none"
               onChangeText={this.handleEmail}/>
            <Text style={[styles.errorstyle]}>{errors.email}</Text>      
           </View>
-  
-  
-          <View style={styles.inputView} >
+        
+         <View style={styles.inputView} >
             <TextInput  
               secureTextEntry
               style={styles.inputText}
-              placeholder="Password..." 
-              placeholderTextColor="#003f5c"
+              placeholder="Password" 
+              placeholderTextColor="#ffffff"
               autoCapitalize="none"
               onChangeText={this.handlePassword}/>
             <Text style={[styles.errorstyle]}>{errors.pass}</Text>  
           </View>
-  
-  
-        
           <TouchableOpacity style={styles.register}
           onPress={this.validateForm}>
             <Text style={styles.registerText}>Register</Text>
@@ -174,19 +170,40 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: '#00acee'
+      backgroundColor: '#33ccff'
     },
+    logo: {
+      borderRadius: 50,
+      width:70, 
+      height: 70, 
+    },
+    text: {
+      color: '#ffffff',
+      marginBottom: 20,
+      fontSize: 50,
+      fontWeight: 'bold',
+      textAlign: 'center',
+      textShadowOffset: {
+          height: 5,
+          width: 5
+      },
+      textShadowRadius: 5,
+      textShadowColor: '#1a0000'
 
+  },
     inputView:{
-      width:"80%",
-      backgroundColor:"#00acee",
+      width:'80%',
+      margin: 10,
       borderColor: "#000000",
       borderWidth: 1.5,
-      height:50,
-      marginBottom:20,
+      borderRadius: 8,
+      height:40,
+      marginBottom:15,
       justifyContent:"center",
       padding:10,
-      paddingTop: 25,
+      paddingTop: 10,
+      paddingBottom: -15,
+      lineHeight: 20,
     },
     inputText:{
       height:50,

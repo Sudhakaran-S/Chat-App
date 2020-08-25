@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, Text, StyleSheet,TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, StyleSheet,TouchableOpacity } from 'react-native';
 import { userList } from '../actions/userAction';
 import { connect } from 'react-redux';
 
@@ -48,7 +48,9 @@ class Home extends Component {
 render() {
     const { users } = this.state;
     return (
+        <ScrollView>
         <View style = {styles.container}>
+
             {users && users.length>0?
             <View>
                 {users.map((item,index) =>
@@ -60,6 +62,7 @@ render() {
                     )})}
             </View>:null}
             </View>
+            </ScrollView>
         );
     }
 }
@@ -91,9 +94,14 @@ const styles = StyleSheet.create({
     item: {
         padding: 10,
         fontSize: 20,
-        height: 50,
+        height: 55,
         color: '#ffffff',
-        backgroundColor: '#000000'
+        fontWeight: 'bold',
+        borderWidth: 1.5,
+        borderBottomColor: '#f2f2f2',
+        borderTopColor: '#f2f2f2',
+        backgroundColor: '#4dd2ff',
+        borderTopEndRadius: 9,
     },
 });
 
